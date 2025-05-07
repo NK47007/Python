@@ -1,0 +1,48 @@
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def mergeKLists(self, lists):
+        """
+        :type lists: List[Optional[ListNode]]
+        :rtype: Optional[ListNode]
+        """
+        def merge2Lists(output, lst):
+            combined = ListNode(0)
+            tail  = combined
+            while output and lst: # add whichever is smaller to the list
+                if output.val < lst.val:
+                    tail.next = output
+                    output = output.next
+                else:
+                    tail.next = lst
+                    lst = lst.next
+                tail = tail.next
+            
+            if output:
+                tail.next  = output
+            if lst:
+                tail.next = lst
+
+            return combined.next           
+
+
+        if lists == []: # if lists is empty, there are no lists to merge
+            return None
+
+        output = None
+        i = 0
+        while i < len(lists): # find first linked list that is non-empty
+            if lists[i]:
+                output = lists[i]
+                i += 1
+                break
+            i += 1
+
+        while i < len(lists):
+            output = merge2Lists(output, lists[i]) # merge the remaining lists into the linked list
+            i += 1
+
+        return output           

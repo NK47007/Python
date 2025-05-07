@@ -1,0 +1,11 @@
+
+class Solution(object):
+    def maxDepth(self, root):
+        if not root:  # If the tree is empty
+            return 0
+
+        if not root.children:  # If the root has no children
+            return 1
+
+        # Calculate the maximum depth of all children and add 1 for the root
+        return 1 + max(self.maxDepth(child) for child in root.children)

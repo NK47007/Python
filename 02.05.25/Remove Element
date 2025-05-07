@@ -1,0 +1,17 @@
+class Solution(object):
+    def removeElement(self, nums, val):
+        """
+        :type nums: List[int]
+        :type val: int
+        :rtype: int
+        """
+        rtype = 0
+        for i in range(len(nums)):
+            # print(f"nums[i]: {nums[i]}   val: {val}")
+            if (val != nums[i]):
+                #print(f"nums[i]: {nums[i]} !=  val: {val}")
+                nums[rtype] = nums[i]
+                # nums[i] = nums[len(nums)-rtype-1]
+                rtype += 1
+            #print(rtype)
+        return rtype

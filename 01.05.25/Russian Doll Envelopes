@@ -1,0 +1,22 @@
+class Solution(object):
+    def maxEnvelopes(self, envelopes):
+        """
+        :type envelopes: List[List[int]]
+        :rtype: int
+        """
+        if len(envelopes) <= 1:
+            return len(envelopes)
+        envelopes = sorted(envelopes, key = lambda x: (x[0], -x[1]))
+        # print envelopes
+        max_lis = 1
+        table = [1] * len(envelopes)
+        for i in range(1, len(envelopes)):
+            for j in range(i):
+                if (envelopes[i][1] > envelopes[j][1]
+                    and table[i] < table[j] + 1):
+                    table[i] = table[j] + 1
+            
+            max_lis = max(max_lis, table[i])
+            
+        # print table
+        return max_lis

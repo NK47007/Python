@@ -1,0 +1,20 @@
+class Solution(object):
+    def isInterleave(self, s1, s2, s3):
+        
+        if len(s1)+len(s2)!= len(s3):
+            return False
+        memo = [[[-1 for k in range(len(s2)+1)] for j in range(len(s1)+1)] for i in range(len(s3)+1)]
+        def recursive(i, j, k):
+            if memo[i][j][k]!=-1:
+                return memo[i][j][k]
+            if i == len(s3):
+                return True
+            if j<len(s1) and s1[j]==s3[i]:
+                if recursive(i+1, j+1, k):
+                    return True
+            if k<len(s2) and s2[k]==s3[i]:
+                if recursive(i+1, j, k+1):
+                    return True
+            memo[i][j][k] = False
+            return False
+        return recursive(0, 0, 0)

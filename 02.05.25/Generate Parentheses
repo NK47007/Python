@@ -1,0 +1,24 @@
+class Solution(object):
+    def generateParenthesis(self, n):
+        """
+        :type n: int
+        :rtype: List[str]
+        """
+        def generate(i,j,n,s,ans):
+            if j==n:
+                ans.append(s)
+                return
+            elif i==n:
+                while j!=n:
+                    s+=")"
+                    j+=1
+                ans.append(s)
+                return    
+
+            open=generate(i+1,j,n,s+"(",ans)
+            if i>j:
+              close=generate(i,j+1,n,s+")",ans)
+        ans=[]      
+        generate(0,0,n,"",ans)      
+        return ans      
+        
