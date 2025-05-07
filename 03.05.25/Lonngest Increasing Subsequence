@@ -1,0 +1,20 @@
+class Solution(object):
+    def lengthOfLIS(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        arr = [ [] ]
+        for num in nums:
+            i = 0
+            while i < len(arr) and arr[i] and num > arr[i][-1]:
+                    i +=1
+              
+            if i == len(arr):
+                arr.append([num])
+            else:
+                arr[i].append(num)
+                
+        return len(arr)
+
+        

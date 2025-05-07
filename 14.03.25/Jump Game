@@ -1,0 +1,13 @@
+class Solution(object):
+    def canJump(self, nums):
+        largestNum = nums[0]
+        for val in nums[:-1]:
+            if val > largestNum:
+                largestNum = val
+            if largestNum == 0:
+                return False
+
+            largestNum -= 1
+
+        return True
+        

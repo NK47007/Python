@@ -1,0 +1,22 @@
+class Solution(object):
+    def nthUglyNumber(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        arr = [1]
+        L2 = L3 = L5 = 0
+        while len(arr)<n:
+            n2 = arr[L2] * 2
+            n3 = arr[L3] * 3
+            n5 = arr[L5] * 5
+            next = min(n2, n3, n5)
+            if next == n2:
+                L2 += 1
+            if next == n3: 
+                L3 += 1
+            if next == n5:
+                L5 += 1
+            arr.append(next)
+        return arr[-1]
+        

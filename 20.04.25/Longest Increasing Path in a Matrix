@@ -1,0 +1,47 @@
+class Solution(object):
+    m = 0
+    n = 0
+    dx = [-1, 0, 1, 0]
+    dy = [0, 1, 0, -1]
+    maxPath = 1
+    matrix = []
+    memo = {}
+
+    def longestIncreasingPath(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: int
+        """
+        self.matrix = matrix
+        self.m = len(matrix)
+        self.n = len(matrix[0])
+        self.maxpath = 1
+        self.memo = {}
+        for row in range(self.m):
+            for col in range(self.n):
+                path = self.dfs(row, col)
+        return max(self.memo.values())
+
+    
+    def validPath(self, row, col, deltaRow, deltaCol):
+        if deltaRow < 0 or deltaRow > self.m - 1 or deltaCol < 0 or deltaCol > self.n - 1:
+            return False
+        if self.matrix[deltaRow][deltaCol] <= self.matrix[row][col]:
+            return False
+        return True
+
+    def dfs(self, row, col):
+        key = "ROW:" + str(row) + "COL:" + str(col)
+        if self.memo.get(key) != None:
+            return self.memo.get(key)
+        result = 1
+        for i in range(4):
+            count = 1
+            deltaRow = row + self.dy[i]
+            deltaCol = col + self.dx[i]
+            if self.validPath(row, col, deltaRow, deltaCol):
+                count = 1 + self.dfs(deltaRow, deltaCol)
+                if count > result:
+                    result = count
+        self.memo[key] = result
+        return result

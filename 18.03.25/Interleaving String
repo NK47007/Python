@@ -1,0 +1,39 @@
+from collections import deque
+class Solution(object):
+    def isInterleave(self, s1, s2, s3):
+        """
+        :type s1: str
+        :type s2: str
+        :type s3: str
+        :rtype: bool
+        """
+        if len(s1) + len(s2) != len(s3):
+            return False
+        q = deque()
+        q.append((0, 0))
+        num_matched = [-1] * (len(s1) + 1)
+        for idx, _ in enumerate(num_matched):
+            num_matched[idx] = [-1] * (len(s2) + 1)  
+              
+        def expand(i, j, is_s1, pos_s3):
+            if i > len(s1) or j > len(s2): 
+                return False
+            ch = s1[i - 1] if is_s1 else s2[j - 1]
+            if ch == s3[pos_s3] and num_matched[i][j] == -1:
+                num_matched[i][j] = pos_s3 + 1
+                q.append((i,j))
+            return False
+
+        num_matched[0][0] = 0
+        while len(q):
+            i, j = q.popleft()
+            if i == len(s1) and j == len(s2):
+                return True
+            expand(i + 1, j, True, num_matched[i][j])
+            expand(i, j + 1, False, num_matched[i][j])
+        return False
+            
+print(Solution().isInterleave("","","abbcd"))
+
+            
+            

@@ -1,0 +1,38 @@
+class Solution(object):
+    def maximalRectangle(self, matrix):
+        def maxHistArea(hist_val):
+            stack = [] # (leftmost_index, h)
+            ans = 0
+            for i, h in enumerate(hist_val):
+                start = i
+                while stack and stack[-1][1] >= h:
+                    index, height = stack.pop()
+                    ans = max(ans, height * (i - index))
+                    start = index
+                stack.append([start, h])
+            n = len(hist_val)
+            while stack:
+                index, height = stack.pop()
+                ans =max(ans, height *(n - index))
+            return ans
+
+
+        """
+        :type matrix: List[List[str]]
+        :rtype: int
+        """
+        hist_val = [0 for _ in range(len(matrix[0]))]
+        ans = 0
+        for r in range(len(matrix)):
+            for cl in range(len(matrix[0])):
+                if matrix[r][cl] == "0":
+                     hist_val[cl] = 0
+                else:
+                    hist_val[cl] += 1
+            ans = max(maxHistArea(hist_val), ans)
+        
+        return ans
+
+
+
+        

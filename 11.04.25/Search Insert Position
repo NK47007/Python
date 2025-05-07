@@ -1,0 +1,11 @@
+class Solution(object):
+    def searchInsert(self, nums, target):
+        nums.append(target)
+        newset=set(nums)
+        newlist=list(newset)
+        newlist.sort()
+        for i in range(len(newlist)):
+            if newlist[i]==target:
+                print(i)
+                return i
+        

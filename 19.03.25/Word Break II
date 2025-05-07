@@ -1,0 +1,29 @@
+class Solution(object):
+    def wordBreak(self, s, wordDict):
+        """
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: List[str]
+        """
+        # sort = sorted(wordDict, key=lambda c: len(c))
+        res = []
+        tmp = []
+        def backtrack(sr, i):
+            if i > len(s):
+                return
+            if not sr:
+                res.append(' '.join(tmp))
+                return
+            if sr[:i] not in wordDict:
+                backtrack(sr, i+1)
+            else:
+                tmp.append(sr[:i])
+                temp = sr
+                sr = sr[i:]
+                backtrack(sr, 0)
+                tmp.pop()
+                backtrack(temp, i+1)
+        
+        backtrack(s, 0)
+        return list(set(res))
+        

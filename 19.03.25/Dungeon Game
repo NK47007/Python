@@ -1,0 +1,61 @@
+class Solution(object):
+    def calculateMinimumHP(self, dungeon):
+        """
+        :type dungeon: List[List[int]]
+        :rtype: int
+        """
+
+        n = len(dungeon)
+        m = len(dungeon[0])
+
+        if n == m == 1:
+            if dungeon[0][0] < 0:
+                return abs(dungeon[0][0]) + 1
+            else:
+                return 1
+
+        hp_map = [[0 for j in range(m)] for i in range(n)]
+
+        if dungeon[n - 1][m - 1] < 0:
+            hp_map[n - 1][m - 1] = 1 + abs(dungeon[n - 1][m - 1])
+        else:
+            hp_map[n - 1][m - 1] = 1
+
+        if n - 2 >= 0:
+            for i in range(n - 2, -1, -1):
+                cell = dungeon[i][m - 1]
+                if cell < 0:
+                    min_hp = abs(cell) + hp_map[i + 1][m - 1]
+                else:
+                    min_hp = max(hp_map[i + 1][m - 1] - cell, 1)
+
+                hp_map[i][m - 1] = min_hp
+
+        if m - 2 >= 0:
+            for i in range(m - 2, -1, -1):
+                cell = dungeon[n - 1][i]
+
+                if cell < 0:
+                    min_hp = abs(cell) + hp_map[n - 1][i + 1]
+                else:
+                    min_hp = max(hp_map[n - 1][i + 1] - cell, 1)
+
+                hp_map[n - 1][i] = min_hp
+
+        if n - 2 >= 0 and m - 2 >= 0:
+            for i in range(n - 2, -1, - 1):
+                for j in range(m - 2, -1, - 1):
+                    cell = dungeon[i][j]
+
+                    if cell < 0:
+                        hp_map[i][j] = min(
+                            abs(cell) + hp_map[i][j + 1],
+                            abs(cell) + hp_map[i + 1][j]
+                        )
+                    else:
+                        right = max(hp_map[i][j + 1] - cell, 1)
+                        left = max(hp_map[i + 1][j] - cell, 1)
+
+                        hp_map[i][j] = min(right, left)
+
+        return hp_map[0][0]

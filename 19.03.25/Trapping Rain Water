@@ -1,0 +1,23 @@
+class Solution(object):
+    def trap(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+        lm=rm=t=0
+        l=0
+        r=len(height)-1
+        while(l<r):
+            if height[l] <= height[r]:
+                if height[l] < lm:
+                    t+=lm-height[l]
+                else:
+                    lm=height[l]
+                l+=1
+            else:
+                if height[r] < rm:
+                    t+=rm-height[r]
+                else:
+                    rm=height[r]
+                r-=1
+        return t

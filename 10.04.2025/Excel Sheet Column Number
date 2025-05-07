@@ -1,0 +1,21 @@
+class Solution(object):
+    def titleToNumber(self, columnTitle):
+        if columnTitle == '':
+            return 0
+
+        v = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        n = 26
+        s = 0
+        for i in columnTitle:
+            for index, j in enumerate(v):
+                if i == j:
+                    s = s * n + (index + 1)
+                    break
+        return s
+
+
+        """
+        :type columnTitle: str
+        :rtype: int
+        """
+        

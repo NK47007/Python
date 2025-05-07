@@ -1,0 +1,48 @@
+class Solution(object):
+    def calculate(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        
+        answer = 0
+        sign = 1
+        stack_ans = {'elements': [], 'size': 0}
+    
+        i = 0
+        while i < len(s):
+            elem = s[i]
+            
+            if elem == '-':
+                sign = -1
+                i += 1
+            
+            elif elem == '+':
+                sign = 1
+                i += 1
+                
+            elif elem == '(':
+                current = {'ans': answer, 'sign': sign}
+                stack_ans['elements'].append(current)
+
+                answer = 0
+                sign = 1
+                i += 1
+            
+            elif elem == ')':
+                previous_ans = stack_ans['elements'].pop()
+                answer = previous_ans['ans'] + (answer * previous_ans['sign'])
+                i += 1
+            
+            elif elem.isnumeric():
+                number = 0
+                while i < len(s) and s[i].isnumeric():
+                    number = (number * 10) + int(s[i])
+                    i += 1
+                
+                answer += sign * number
+            
+            else:
+                i += 1
+            
+        return answer

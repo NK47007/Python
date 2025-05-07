@@ -1,0 +1,27 @@
+class Solution(object):
+    def combinationSum(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        return self.helper(candidates,target,[],0,0,[])
+
+    def helper(self,arr, target,final_ans,ans,index,temp_arr):
+    
+        if ans>target or index == len(arr):
+            return
+        if target == ans:
+            final_ans.append(temp_arr[:])
+            return
+
+        #include
+        temp_arr.append(arr[index])
+        self.helper(arr,target,final_ans,ans+arr[index],index,temp_arr)
+        temp_arr.pop()
+
+        #don't include
+        self.helper(arr,target,final_ans,ans,index+1,temp_arr)
+
+        return final_ans
+            

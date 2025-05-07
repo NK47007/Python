@@ -1,0 +1,26 @@
+
+import heapq
+
+class Solution(object):
+    def nthSuperUglyNumber(self, n, primes):
+        """
+        :type n: int
+        :type primes: List[int]
+        :rtype: int
+        """
+        heap = [1]
+        seen = set(heap) 
+        count = 0  
+        
+        while heap:
+            current = heapq.heappop(heap)
+            count += 1
+            
+            if count == n:
+                return current
+            
+            for prime in primes:
+                next_ugly = current * prime
+                if next_ugly not in seen:
+                    seen.add(next_ugly)
+                    heapq.heappush(heap, next_ugly)

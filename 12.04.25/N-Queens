@@ -1,0 +1,34 @@
+
+class Solution(object):
+    def solveNQueens(self, n):
+        """
+        :type n: int
+        :rtype: List[List[str]]
+        """
+        colpresent = [False for _ in range(n)]
+        pdiagonalpresent = [False for _ in range(n+n-1)] # \
+        sdiagonalpresent = [False for _ in range(n+n-1)] # /
+
+        grid = [["." for _ in range(n)] for __ in range(n)]
+
+        ans = []
+
+        def solve(r,cnt):
+            if cnt == n:
+                ans.append(["".join(i) for i in grid])
+                return
+            
+            for j in range(n):
+                if not colpresent[j] and not pdiagonalpresent[r+j] and not sdiagonalpresent[n-1-r+j]:
+                     colpresent[j] = True
+                     pdiagonalpresent[r+j] = True
+                     sdiagonalpresent[n-1-r+j] = True
+                     grid[r][j] = 'Q'
+                     solve(r+1,cnt+1)
+                     colpresent[j] = False
+                     pdiagonalpresent[r+j] = False
+                     sdiagonalpresent[n-1-r+j] = False
+                     grid[r][j] = '.'
+        
+        solve(0,0)
+        return ans
